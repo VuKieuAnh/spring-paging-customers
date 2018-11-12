@@ -1,11 +1,12 @@
-package com.codegym.service;
+package com.codegym.service.ipml;
 
 import com.codegym.model.Customer;
 import com.codegym.repository.CustomerRepository;
+import com.codegym.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 

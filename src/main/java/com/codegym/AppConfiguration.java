@@ -1,7 +1,9 @@
 package com.codegym;
-import com.codegym.repository.CustomerRepository;
+import com.codegym.formater.ProvinceFormatter;
 import com.codegym.service.CustomerService;
-import com.codegym.service.CustomerServiceImpl;
+import com.codegym.service.ProvinceService;
+import com.codegym.service.ipml.CustomerServiceImpl;
+import com.codegym.service.ipml.ProvinceServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -19,6 +22,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
@@ -35,7 +39,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 @ComponentScan("com.codegym")
 @EnableJpaRepositories("com.codegym.repository")
-public class AppConfiguration implements ApplicationContextAware {
+public class AppConfiguration extends WebMvcConfigurerAdapter implements ApplicationContextAware {
     @Bean
     public SpringResourceTemplateResolver templateResolver(){
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -108,8 +112,18 @@ public class AppConfiguration implements ApplicationContextAware {
 
 
     @Bean
-    public CustomerService customerService(){
+    public CustomerService customerService()
+    {
         return new CustomerServiceImpl();
     }
 
+    @Bean
+    public ProvinceService provinceService(){
+        return new ProvinceServiceImpl();
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new ProvinceFormatter(applicationContext.getBean(ProvinceService.class)));
+    }
 }

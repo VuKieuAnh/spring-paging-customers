@@ -18,6 +18,7 @@
         <tr>
             <td th:text="${customer.firstName}"></td>
             <td th:text="${customer.lastName}"></td>
+            <td th:if="${customer.province}" th:text="${customer.province.name}"></td>
             <td><a th:href="@{/customers/edit/__${customer.id}__ }">Edit</a></td>
             <td><a th:href="@{/customers/delete/__${customer.id}__ }">Delete</a></td>
         </tr>
