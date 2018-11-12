@@ -1,50 +1,51 @@
 package com.codegym.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "customers")
+
 public class Customer {
-    private int id;
-    private String name;
-    private String email;
-    private String address;
 
-    public Customer() {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
+    private String firstName;
+    private String lastName;
+
+    public Customer() {}
+
+    public Customer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public Customer(int id, String name, String email, String add) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.address = add;
+    @Override
+    public String toString() {
+        return String.format("Customer[id=%d, firstName='%s', lastName='%s']", id, firstName, lastName);
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
